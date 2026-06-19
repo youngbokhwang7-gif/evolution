@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>1% Evolution - CEO 황영복</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="1% Engine">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/glow/180/000000/rocket.png">
+
+    <style>
+        :root {
+            --bg-color: #0B192C;
+            --card-bg: #1E3E62;
+            --text-color: #FFFFFF;
+            --point-color: #FFD700;
+            --accent-color: #008DDA;
+        }
+        
+        body {
+            margin: 0;
+            padding: calc(env(safe-area-inset-top) + 20px) 0 calc(env(safe-area-inset-bottom) + 20px) 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: '-apple-system', 'Apple SD Gothic Neo', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--point-color);
+            margin: 10px 0 5px 0;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #A3B7D0;
+            font-weight: 500;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .goal-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar-container {
+            background-color: #0B192C;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-color), var(--point-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* 퀘스트 전용 프로그레스 바 스타일 */
+        .quest-bar {
+            background: linear-gradient(90deg, #10B981, #34D399) !important;
+        }
+
+        .mantra {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--point-color);
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .quest-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quest-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid #2E5A88;
+        }
+
+        .quest-item:last-child {
+            border-bottom: none;
+        }
+
+        .quest-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+            margin-top: 1px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .quest-text {
+            font-size: 15px;
+            line-height: 1.4;
+            cursor: pointer;
+            word-break: keep-all;
+            color: #A3B7D0;
+        }
+
+        .timer-display {
+            font-size: 42px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            font-family: monospace;
+            color: var(--point-color);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        button {
+            box-sizing: border-box;
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--point-color);
+            color: #0B192C;
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: #10B981;
+            color: white;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #A3B7D0;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #2E5A88;
+            background-color: #0B192C;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+        }
+        
+        .reset-link {
+            text-align: center;
+            display: block;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #A3B7D0;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>1% Evolution</h1>
+        <div class="subtitle">15억 매출을 향한 CEO 황영복의 행동력 엔진</div>
+    </header>
+
+    <!-- 실적 현황판 카드 -->
+    <div class="card">
+        <div class="goal-title">
+            <span>2026년 매출 목표 (1,500,000,000 원)</span>
+            <span id="sales-percent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="sales-bar" class="progress-bar"></div>
+        </div>
+        <div style="font-size: 14px; color: #A3B7D0; margin-bottom: 15px;">
+            현재: <span id="display-current-sales">로딩 중...</span><br>
+            남은 격차: <span id="display-remain-sales">로딩 중...</span>
+        </div>
+
+        <div class="goal-title">
+            <span>2026년 순이익 목표 (250,000,000 원)</span>
+            <span id="profit-percent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="profit-bar" class="progress-bar"></div>
+        </div>
+        <div style="font-size: 14px; color: #A3B7D0;">
+            현재: <span id="display-current-profit">로딩 중...</span><br>
+            남은 격차: <span id="display-remain-profit">로딩 중...</span>
+        </div>
+    </div>
+
+    <!-- 명언 카드 -->
+    <div class="card" style="border: 2px solid var(--point-color);">
+        <div class="mantra">
+            "영복아, 오늘 딱 1%의 행동이<br>남은 9.5억의 문을 열어젖힌다!"
+        </div>
+    </div>
+
+    <!-- 퀘스트 카드 (실시간 달성률 게이지 탑재) -->
+    <div class="card">
+        <div class="goal-title" style="color: var(--point-color);">
+            <span>오늘의 퀘스트</span>
+            <span id="quest-percent">0%</span>
+        </div>
+        <div class="progress-bar-container" style="height: 10px; margin-bottom: 15px;">
+            <div id="quest-bar" class="progress-bar quest-bar"></div>
+        </div>
+        
+        <ul class="quest-list">
+            <li class="quest-item">
+                <input type="checkbox" id="q1">
+                <label for="q1" class="quest-text">주말 전 핵심 거래처/대리점 2곳 안부 전화 돌리기</label>
+            </li>
+            <li class="quest-item">
+                <input type="checkbox" id="q2">
+                <label for="q2" class="quest-text">관내 또는 수도권 신규 건설 현장 1곳 직접 방문 및 명함 전달</label>
+            </li>
+            <li class="quest-item">
+                <input type="checkbox" id="q3">
+                <label for="q3" class="quest-text">이동/영업 동선 중 현장 수작업 비효율 1가지 포착 후 메모</label>
+            </li>
+            <li class="quest-item">
+                <input type="checkbox" id="q4">
+                <label for="q4" class="quest-text">마감 전 뇌의 타협을 이겨내고 '딱 1통 더' 영업 전화 누르기</label>
+            </li>
+            <li class="quest-item">
+                <input type="checkbox" id="q5">
+                <label for="q5" class="quest-text">퇴근 전 당일 수확한 단열재 발주/가계약 실적 1원까지 기록</label>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 타이머 카드 -->
+    <div class="card">
+        <div class="goal-title">자율 몰입 정진 룸</div>
+        <div class="timer-display" id="timer">02:00:00</div>
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="toggleTimer()" id="btn-timer-start">몰입 시작</button>
+            <button class="btn-primary" onclick="completeTimer()">정진 완료</button>
+        </div>
+    </div>
+
+    <!-- 실적 추가 반영 카드 -->
+    <div class="card">
+        <div class="goal-title">일일 회향 (실적 반영)</div>
+        <div class="input-group">
+            <label>오늘 추가된 매출액 (원 단위 정수 입력)</label>
+            <input type="number" id="input-sales" placeholder="예: 5000000">
+        </div>
+        <div class="input-group">
+            <label>오늘 추가된 순이익 (원 단위 정수 입력)</label>
+            <input type="number" id="input-profit" placeholder="예: 1000000">
+        </div>
+        <button class="btn-primary" style="width:100%;" id="btn-update">대시보드 반영하기</button>
+        <span class="reset-link" id="btn-reset">설정된 기본 실적으로 초기화 리셋</span>
+    </div>
+
+    <!-- ⚙️ 신설: 기준 기본 실적 설정 카드 -->
+    <div class="card" style="border: 1px dashed var(--accent-color);">
+        <div class="goal-title" style="font-size: 15px; color: #A3B7D0;">⚙️ 초기화용 기본 실적 설정</div>
+        <div class="input-group" style="margin-bottom: 10px;">
+            <label style="font-size: 12px;">기본 매출액 설정 (원)</label>
+            <input type="number" id="default-sales-input" value="550000000">
+        </div>
+        <div class="input-group" style="margin-bottom: 10px;">
+            <label style="font-size: 12px;">기본 순이익 설정 (원)</label>
+            <input type="number" id="default-profit-input" value="80000000">
+        </div>
+        <button class="btn-success" id="btn-save-default">기본값 서버에 저장하기</button>
+    </div>
+</div>
+
+<!-- 🔥 Firebase 시스템 실시간 연동 스크립트 모듈 -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { initializeFirestore, doc, setDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // ⚙️ 대표님의 실제 Firebase 설정 값
+    const firebaseConfig = {
+        apiKey: "AIzaSyCigR06gjsG7DfbEH0nxltT7B4ijCTTSnQ",
+        authDomain: "one-percent-evolution.firebaseapp.com",
+        projectId: "one-percent-evolution",
+        storageBucket: "one-percent-evolution.firebasestorage.app",
+        messagingSenderId: "122210814895",
+        appId: "1:122210814895:web:8a5bd0da3c383d631ebd5a"
+    };
+
+    // Firebase 초기화
+    const app = initializeApp(firebaseConfig);
+    
+    // Standard 버전에 맞춤 동기화 데이터베이스 세팅
+    const db = initializeFirestore(app, {
+        databaseId: "one-percent-evolution"
+    });
+    
+    const dataRef = doc(db, "evolution", "ceo_data");
+
+    const TARGET_SALES = 1500000000;
+    const TARGET_PROFIT = 250000000; 
+
+    let currentSalesVal = 550000000;
+    let currentProfitVal = 80000000;
+    
+    let baseSalesConfig = 550000000;
+    let baseProfitConfig = 80000000;
+
+    // 대시보드 및 퀘스트 게이지 통합 출력 함수
+    function renderDashboard() {
+        // 1. 매출 및 순이익 연동 계산
+        const salesPct = ((currentSalesVal / TARGET_SALES) * 100).toFixed(1);
+        document.getElementById('sales-bar').style.width = salesPct + '%';
+        document.getElementById('sales-percent').innerText = salesPct + '%';
+        document.getElementById('display-current-sales').innerText = currentSalesVal.toLocaleString() + " 원";
+        document.getElementById('display-remain-sales').innerText = Math.max(0, TARGET_SALES - currentSalesVal).toLocaleString() + " 원";
+
+        const profitPct = ((currentProfitVal / TARGET_PROFIT) * 100).toFixed(1);
+        document.getElementById('profit-bar').style.width = profitPct + '%';
+        document.getElementById('profit-percent').innerText = profitPct + '%';
+        document.getElementById('display-current-profit').innerText = currentProfitVal.toLocaleString() + " 원";
+        document.getElementById('display-remain-profit').innerText = Math.max(0, TARGET_PROFIT - currentProfitVal).toLocaleString() + " 원";
+
+        // 2. 퀘스트 달성률 실시간 실적 계산
+        let checkedCount = 0;
+        for (let i = 1; i <= 5; i++) {
+            if (document.getElementById('q' + i).checked) {
+                checkedCount++;
+            }
+        }
+        const questPct = Math.round((checkedCount / 5) * 100);
+        document.getElementById('quest-bar').style.width = questPct + '%';
+        document.getElementById('quest-percent').innerText = questPct + '%';
+    }
+
+    // 📡 클라우드 데이터 실시간 수신 감지기
+    onSnapshot(dataRef, (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            currentSalesVal = data.sales ?? 550000000;
+            currentProfitVal = data.profit ?? 80000000;
+            
+            // 데이터베이스 내 커스텀 기본값 로드
+            baseSalesConfig = data.baseSales ?? 550000000;
+            baseProfitConfig = data.baseProfit ?? 80000000;
+            
+            document.getElementById('default-sales-input').value = baseSalesConfig;
+            document.getElementById('default-profit-input').value = baseProfitConfig;
+
+            // 퀘스트 상태값 동기화
+            for (let i = 1; i <= 5; i++) {
+                const checked = data['q' + i] ?? false;
+                const element = document.getElementById('q' + i);
+                if (element) element.checked = checked;
+            }
+            renderDashboard();
+        } else {
+            // 서버 최초 기동 시 기본 규격 세팅
+            setDoc(dataRef, {
+                sales: 550000000,
+                profit: 80000000,
+                baseSales: 550000000,
+                baseProfit: 80000000,
+                q1: false, q2: false, q3: false, q4: false, q5: false
+            });
+        }
+    }, (error) => {
+        console.error("Firebase 연결 실패 원인:", error);
+    });
+
+    // 실적 추가 입력 로직
+    document.getElementById('btn-update').addEventListener('click', async () => {
+        const addSales = parseInt(document.getElementById('input-sales').value) || 0;
+        const addProfit = parseInt(document.getElementById('input-profit').value) || 0;
+
+        try {
+            await updateDoc(dataRef, {
+                sales: currentSalesVal + addSales,
+                profit: currentProfitVal + addProfit
+            });
+            document.getElementById('input-sales').value = '';
+            document.getElementById('input-profit').value = '';
+            alert("오늘 실적이 클라우드 서버에 동기화되었습니다.");
+        } catch (e) {
+            alert("전송 오류 발생: 서버 인스턴스를 다시 확인해 주세요.");
+        }
+    });
+
+    // 퀘스트 체크박스 변경 시 서버 즉시 반영 및 퍼센트 계산
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById('q' + i).addEventListener('change', async () => {
+            const questData = {};
+            for (let j = 1; j <= 5; j++) {
+                questData['q' + j] = document.getElementById('q' + j).checked;
+            }
+            await updateDoc(dataRef, questData);
+            renderDashboard();
+        });
+    }
+
+    // 신설: 기본 설정값 서버 저장 버튼 이벤트
+    document.getElementById('btn-save-default').addEventListener('click', async () => {
+        const newBaseSales = parseInt(document.getElementById('default-sales-input').value) || 0;
+        const newBaseProfit = parseInt(document.getElementById('default-profit-input').value) || 0;
+
+        try {
+            await updateDoc(dataRef, {
+                baseSales: newBaseSales,
+                baseProfit: newBaseProfit
+            });
+            alert("초기화용 기본 설정 실적이 서버에 저장되었습니다.");
+        } catch (e) {
+            alert("기본값 저장 실패");
+        }
+    });
+
+    // 리셋 링크 클릭 시 사용자가 커스텀한 기본값으로 리셋
+    document.getElementById('btn-reset').addEventListener('click', async () => {
+        if(confirm(`서버 데이터를 내가 설정한 기본 실적(매출: ${baseSalesConfig.toLocaleString()}원 / 순이익: ${baseProfitConfig.toLocaleString()}원) 상태로 초기화하시겠습니까?`)) {
+            await updateDoc(dataRef, {
+                sales: baseSalesConfig,
+                profit: baseProfitConfig,
+                q1: false, q2: false, q3: false, q4: false, q5: false
+            });
+            renderDashboard();
+        }
+    });
+</script>
+
+<script>
+    // 기기 단독 구동 몰입 타이머 제어부
+    let timerInterval;
+    let totalSeconds = 7200; 
+    let isRunning = false;
+
+    function toggleTimer() {
+        const btn = document.getElementById('btn-timer-start');
+        if (!isRunning) {
+            isRunning = true;
+            btn.innerText = "일시 정지";
+            timerInterval = setInterval(() => {
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    alert("원력 집중 완수!");
+                }
+            }, 1000);
+        } else {
+            isRunning = false;
+            btn.innerText = "몰입 시작";
+            clearInterval(timerInterval);
+        }
+    }
+
+    function updateTimerDisplay() {
+        const hrs = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+        const mins = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+        const secs = (totalSeconds % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `${hrs}:${mins}:${secs}`;
+    }
+
+    function completeTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        document.getElementById('btn-timer-start').innerText = "몰입 시작";
+        totalSeconds = 7200;
+        updateTimerDisplay();
+        alert("오늘의 몰입 정진이 회향되었습니다.");
+    }
+</script>
+</body>
+</html>
